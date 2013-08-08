@@ -70,7 +70,8 @@ class Node extends \Twig_Node
         $compiler->outdent()->write("}\n\n");
 
         $compiler->write("if (!isset(\$ab_selected_test)) {\n");
-        $compiler->indent()->write("\$ab_random_seed = \$_SERVER['REMOTE_ADDR'] . count(\$ab_variants) . '" . $this->test_name . "';\n");
+        $compiler->write("\$ip = isset(\$_SERVER['HTTP_X_REAL_IP']) ? \$_SERVER['HTTP_X_REAL_IP'] : \$_SERVER['REMOTE_ADDR'];");
+        $compiler->indent()->write("\$ab_random_seed = \$ip . count(\$ab_variants) . '" . $this->test_name . "';\n");
         $compiler->write("\$ab_hash_seed = substr(md5(\$ab_random_seed), 0, 6);\n");
         $compiler->write("\$ab_int_seed = intval(hexdec(\$ab_hash_seed));\n");
         $compiler->write("mt_srand(\$ab_int_seed);\n");
