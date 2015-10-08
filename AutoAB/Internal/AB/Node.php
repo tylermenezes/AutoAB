@@ -49,7 +49,7 @@ class Node extends \Twig_Node
         foreach ($this->getNode('variants') as $k => $v) {
             $compiler->write("[\n");
             $compiler->indent()->write("'name' => '$k',\n");
-            $compiler->write("'value' => function(){\n");
+            $compiler->write('"value" => function() use ($context) {'."\n");
             $compiler->subcompile($v);
             $compiler->write("}\n");
             $compiler->outdent()->write("],\n");
